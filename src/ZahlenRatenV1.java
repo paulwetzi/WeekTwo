@@ -47,22 +47,29 @@ public class ZahlenRatenV1 {
                 int trys = 9;
 
                 System.out.println(randomNum);
-                while (trys >  0 && guess != randomNum){
+                while (trys > 0 && guess != randomNum) {
                     System.out.println("Welche Zahl schätzt du?");
                     guess = scanner.nextInt();
-                    if (guess == randomNum){
-                        System.out.println("Erraten");
-                    } else if (((guess < randomNum) && !(guess - 3 < randomNum)) || ((guess > randomNum) && !(guess + 3 > randomNum))) {
-                        System.out.println("fast da");
-                    } /*else if (guess > randomNum) {
-                        System.out.println("Kleiner");
-                    }*/
+
+                    int difference = Math.abs(guess - randomNum);
+
+                    if (difference >= 4 && difference <= 10) {
+                        System.out.println("relativ nahe / 4 - 10 daneben");
+                    }  else if (difference >= 1 && difference <= 3) {
+                        System.out.println("Fast da / 1 - 3 daneben");
+                    }else if (difference >= 11 && difference <= 20) {
+                        System.out.println("Nicht ganz so weit weg / max 20 daneben");
+                    } else {
+                        System.out.println("Weit weg / mehr als 20");
+                    }
+
                     trys--;
                     System.out.println("Du hast noch " + trys + " Versuche");
                 }
-                if (trys == 0){
+
+                if (trys == 0) {
                     System.out.println("Verloren");
-                } else{
+                } else {
                     System.out.println("Gewonnen");
                 }
             }else if (option == 3) {
