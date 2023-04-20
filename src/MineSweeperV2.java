@@ -1,9 +1,7 @@
-import  java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-public class MineSweeperV1 {
+public class MineSweeperV2 {
     public static void main(String[] args) {
         Random r = new Random();
         Scanner scanner = new Scanner(System.in);
@@ -61,34 +59,46 @@ public class MineSweeperV1 {
             }
             int i;
             int j;
+            String userInput;
 
-            do{
-            // User Input
-            String userInput = scanner.nextLine();
+            do {
+                // User Input
+                char firstInputTry;
+                char secondInputTry;
+                do {
 
-            // UserInput split
-            firstInput = userInput.charAt(0);   // first
-            secondInput = userInput.charAt(1);  // second
+                    System.out.println("Your Try: ");
+                    userInput = scanner.nextLine();
+                    firstInputTry = userInput.charAt(0);   // first
+                    secondInputTry = userInput.charAt(1);  // second
 
-            if (firstInput >= 48 && firstInput <= 57){  // Is first Input Number ?
-                // convert char to String
-                String first = firstInput+"";  // first
+                } while ((firstInputTry <= 'A' && firstInputTry >= 'J') && (secondInputTry <= 0 && secondInputTry >= 9));
+
+                // UserInput split
+                firstInput = userInput.charAt(0);   // first
+                secondInput = userInput.charAt(1);  // second
+
+                // Accept 1.char == Number 2.char == Letter
+
+                if (firstInput >= 48 && firstInput <= 57) {  // Is first Input Number ?
+                    // convert char to String
+                    String first = firstInput + "";  // first
 
 
-                // make int out of char
-                i = Integer.parseInt(first);
-                j = secondInput - 65;
-            } else{
-                String second = secondInput+"";  // second
+                    // make int out of char
+                    i = Integer.parseInt(first);
+                    j = secondInput - 65;
+                } else {  // Accept 2.char == Number 1.char == Letter
+                    String second = secondInput + "";  // second
 
-                // make int out of char
-                j = firstInput - 65;
-                i = Integer.parseInt(second);
+                    // make int out of char
+                    j = firstInput - 65;
+                    i = Integer.parseInt(second);
 
-            }
+                }
 
-            if (map[i][j] == 9)
-                System.out.println("Ist schon aufgedeckt");
+                if (map[i][j] == 9)
+                    System.out.println("Ist schon aufgedeckt");
                 //userInput = scanner.nextLine();
             } while (map[i][j] == 9);
 
@@ -99,13 +109,13 @@ public class MineSweeperV1 {
                 System.out.println("Game Over");
                 gameOn = false;
             } else{
-            // Show pre-Map description
-            mapString[i + 1][j + 1] = "[-]";
-            map[i][j] = 9;
-            rightChoices++;
-            System.out.println("Du hast " + rightChoices + "/" +(100 - mineCount) + " (" +(rightChoices / (100 - mineCount) * 100 ) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
-            System.out.println("Es bleiben noch " +  mineCount + " Minen versteckt.");
-            System.out.println("Wo willst du nach Minen suchen?");
+                // Show pre-Map description
+                mapString[i + 1][j + 1] = "[-]";
+                map[i][j] = 9;
+                rightChoices++;
+                System.out.println("Du hast " + rightChoices + "/" +(100 - mineCount) + " (" +(rightChoices / (100 - mineCount) * 100 ) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
+                System.out.println("Es bleiben noch " +  mineCount + " Minen versteckt.");
+                System.out.println("Wo willst du nach Minen suchen?");
             }
         }
     }

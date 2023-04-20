@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -62,7 +63,6 @@ public class ZahlenRatenV1 {
                     } else {
                         System.out.println("Weit weg / mehr als 20");
                     }
-
                     trys--;
                     System.out.println("Du hast noch " + trys + " Versuche");
                 }
@@ -73,7 +73,70 @@ public class ZahlenRatenV1 {
                     System.out.println("Gewonnen");
                 }
             }else if (option == 3) {
+                ArrayList<Integer> humanGuesses = new ArrayList<>();    // Safes all the Input Numbers from human
+                ArrayList<Integer> computerGuesses = new ArrayList<>(); // Safes all the Input Numbers from Computer
+                int humanGuess = 3;
+                int computerGuess = -1;
+                int targetNum = r.nextInt(101);
+                boolean humanTurn = false; //r.nextBoolean();
+                boolean rightNum = false;
+                boolean humanBigger = false;
+                boolean computerBigger = false;
+                ArrayList<Integer> computerArea = new ArrayList<>();
 
+                for (int i = 0; i < 101; i++) {
+                    computerArea.add(i);
+                }
+                //System.out.println(targetNum);
+
+                // Code here
+                while (!rightNum) {
+                    if (humanTurn) {
+                        System.out.println("Dein Versuch: ");
+                        humanGuess = scanner.nextInt();
+                        System.out.println("humanGuess: " + humanGuess);
+                    } else {
+                        int areaSizeDivided = (computerArea.size() / 2); // Hälfte von computerArea.size
+                        computerGuess = computerArea.get(areaSizeDivided);
+                        System.out.println("Computerguess: " + computerGuess);
+                    }
+                    // Area from 1 to 100
+                    if (humanTurn && (humanGuess < targetNum)) {
+                        for (int i = 0; i < humanGuess; i++) {
+                            computerArea.remove(Integer.valueOf(i));
+                        }
+                        System.out.println("Größer");
+                    }
+                    if (humanTurn && (humanGuess > targetNum)) {
+                        for (int i = 100; i > humanGuess; i--) {
+                            computerArea.remove(Integer.valueOf(i));
+                        }
+                        System.out.println("Kleiner");
+                    }
+                    if (!humanTurn && (computerGuess < targetNum)) {
+                        for (int i = 0; i < computerGuess; i++) {
+                            computerArea.remove(Integer.valueOf(i));
+                        }
+                        System.out.println("Größer");
+                    }
+                    if (!humanTurn && (computerGuess > targetNum)) {
+                        for (int i = 100; i > computerGuess; i--) {
+                            computerArea.remove(Integer.valueOf(i));
+                        }
+                        System.out.println("Kleiner");
+                    }
+                    if (computerGuess == targetNum){
+                        System.out.println("Computer Gewinnt!");
+                        rightNum = true;
+                    } if (humanGuess == targetNum){
+                        System.out.println("Spieler Gewinnt!");
+                        rightNum = true;
+                    }
+                    humanTurn = !humanTurn;
+                    humanGuesses.add(humanGuess);
+                    computerGuesses.add(computerGuess);
+                    System.out.println("humanGuesses: " + humanGuesses + "   computerGuesses: " + computerGuesses );
+                }
             }else if (option == 4) {
 
             }else if (option == 0) {

@@ -1,146 +1,175 @@
-import java.lang.reflect.Array;
+import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
-import static java.lang.Math.abs;
 
 public class chartointtest {
     public static void main(String[] args) {
-        int option = 1;
-        Random r = new Random();
+        int option = 9;
         Scanner scanner = new Scanner(System.in);
 
         while (option != 0) {
-            System.out.println("Welches Level möchtest du spielen?");
-            System.out.println("1. Level 1");
-            System.out.println("2. Level 2");
-            System.out.println("3. Level 3");
-            System.out.println("4. Level 4");
-            System.out.println("0. Spiel beenden");
+            System.out.println();
+            System.out.println("Welches Abenteuer möchtest du spielen?");
+            System.out.println("--------------------------------------");
+            System.out.println("1. The Drunken Wiking");
+            System.out.println("2. Rise of the Hydra");
+            System.out.println("0. Aufgeben");
             option = scanner.nextInt();
 
             if (option == 1) {
-                int randomNum = r.nextInt(101);
-                int guess = 0;
-                int trys = 9;
+                String[][] choices = {
+                        // parentID, ID, choiceTxt, resultTxt, moveToID
 
-                while (trys > 0 && guess != randomNum) {
-                    System.out.println("Welche Zahl schätzt du?");
-                    guess = scanner.nextInt();
-                    if (guess == randomNum) {
-                        System.out.println("Erraten");
-                    } else if (guess < randomNum) {
-                        System.out.println("Größer");
-                    } else if (guess > randomNum) {
-                        System.out.println("Kleiner");
-                    }
-                    trys--;
-                    System.out.println("Du hast noch " + trys + " Versuche");
-                }
-                if (trys == 0) {
-                    System.out.println("Verloren");
-                } else {
-                    System.out.println("Gewonnen");
-                }
+                        {"-1", "0", "", "Du stehst in einer Bar.", "9"},                                                        // 0. Pos   // 9 is UserInput (currentChoice)
 
-            } else if (option == 2) {
-                int randomNum = r.nextInt(101);
-                int guess = 0;
-                int trys = 9;
+                        {"0", "1", "Geh in die Wildnis", "Du bist in der Wildnis angekommen.", "9"},                            // 1. Pos
+                        {"0", "2", "Trink ein Getränk", "Du lässt dir ein Getränk schmecken", "0"},                             // 2. Pos
 
-                System.out.println(randomNum);
-                while (trys > 0 && guess != randomNum) {
-                    System.out.println("Welche Zahl schätzt du?");
-                    guess = scanner.nextInt();
+                        {"1", "3", "Kämpf gegen das Monster", "Das Monster ist ein harter Gegner, aber du besiegst es.", "1"},  // 3. Pos
+                        {"1", "4", "Lauf vor dem Monster davon", "Du läufst wie ein Feigling zurück zur Bar.", "0"}};           // 4. Pos
 
-                    int difference = Math.abs(guess - randomNum);
+                int currentChoice = 0;
 
-                    if (difference >= 4 && difference <= 10) {
-                        System.out.println("relativ nahe / 4 - 10 daneben");
-                    }  else if (difference >= 1 && difference <= 3) {
-                        System.out.println("Fast da / 1 - 3 daneben");
-                    }else if (difference >= 11 && difference <= 20) {
-                        System.out.println("Nicht ganz so weit weg / max 20 daneben");
-                    } else {
-                        System.out.println("Weit weg / mehr als 20");
-                    }
 
-                    trys--;
-                    System.out.println("Du hast noch " + trys + " Versuche");
-                }
+                while (true) {
+                    // Code here
 
-                if (trys == 0) {
-                    System.out.println("Verloren");
-                } else {
-                    System.out.println("Gewonnen");
-                }
-            } else if (option == 3) {
-                int targetNum = r.nextInt(101);
-                int humanGuess = -1;
-                int computerGuess = -1;
-                ArrayList<Integer> humanGuesses = new ArrayList<>();
-                ArrayList<Integer> computerGuesses = new ArrayList<>();
-                int humanScore = 0;
-                int computerScore = 0;
-                boolean humanTurn = r.nextBoolean();
-                boolean bigger = false;
-                boolean smaller = false;
+                    // if currentChoice == 0: String[0][3]  sout: String[1][1 and 2]  sout: String[2][1 and 2]
+                    if (currentChoice == 0){
+                        System.out.println(choices[0][3]);                                              // Überschrift
+                        System.out.println("------------------------------");
+                        System.out.println(choices[1][1] + ".) " + choices[1][2]);                      // 1.
+                        System.out.println(choices[2][1] + ".) " + choices[2][2]);                      // 2.
+                        System.out.println("Was willst du als nächstes tun?");
+                        currentChoice = scanner.nextInt();
+                       /* do {
 
-                while (humanScore < 2 && computerScore < 2) {
-                    if (humanTurn) {
-                        System.out.println("Dein Tipp:");
-                        humanGuess = scanner.nextInt();
-                        humanGuesses.add(humanGuess);
-                        System.out.print("Bisherige Tipps: ");
-                        System.out.println("[Mensch: " + humanGuesses + ", Computer: " + computerGuesses + "]");
-                        if (humanGuess == targetNum) {
-                            System.out.println("Erraten!");
-                            humanScore++;
-                        } else if (humanGuess < targetNum) {
-                            System.out.println("Größer!");
-                        } else {
-                            System.out.println("Kleiner!");
-                        }
+                        }while(currentChoice < 1 && currentChoice > 2)*/
+                    }if (currentChoice == 1){
                         System.out.println();
-                    } else {
-                        System.out.println("Computer-Tipp:");
-                        if (computerGuess == -1) {
-                            computerGuess = r.nextInt(101);
-                            computerGuesses.add(computerGuess);
-                        } else if (computerGuess == targetNum) {
-                            System.out.println("Erraten!");
-                            computerScore++;
-                        } else if (computerGuess < targetNum) {
-                            System.out.println("Größer!");
-                            computerGuess += r.nextInt(3) + 1; // computer makes a random guess within 1-3 larger than the previous guess
-                            computerGuesses.add(computerGuess);
-                        } else {
-                            System.out.println("Kleiner!");
-                            computerGuess -= r.nextInt(3) + 1; // computer makes a random guess within 1-3 smaller than the previous guess
-                            computerGuesses.add(computerGuess);
+                        System.out.println(choices[1][3]);                                              // Überschrift
+                        System.out.println("------------------------------");
+                        System.out.println(choices[3][1] + ".) " + choices[3][2]);                      // 3,
+                        System.out.println(choices[4][1] + ".) " + choices[4][2]);                      // 4.
+                        System.out.println("Was willst du als nächstes tun?");
+                        currentChoice = scanner.nextInt();
+/*
+                        while(currentChoice < 3 && currentChoice > 4){
+                        }*/
+                    }if (currentChoice == 2){
+                        System.out.println();
+                        System.out.println(choices[2][3]);
+                        currentChoice = 0;
+                        System.out.println();
+
+
+                        /*
+                        System.out.println("------------------------------");
+                        System.out.println(choices[1][1] + ".) " + choices[1][2]);
+                        System.out.println(choices[2][1] + ".) " + choices[2][2]);
+                        System.out.println("Was willst du als nächstes tun?");*/
+
+
+                        // if he chooses 3 or 4 currentChoice == 0
+                        //currentChoice = scanner.nextInt();
+                    }if (currentChoice == 3){
+                        System.out.println();
+                        System.out.println(choices[3][3]);
+
+                        /*
+                        System.out.println("------------------------------");
+                        System.out.println(choices[1][1] + ".) " + choices[1][2]);
+                        System.out.println(choices[2][1] + ".) " + choices[2][2]);
+                        System.out.println("Was willst du als nächstes tun?");*/
+
+                        currentChoice = 1;//scanner.nextInt();
+                    }if (currentChoice == 4){
+                        System.out.println();
+                        System.out.println(choices[4][3]);
+                        System.out.println();
+                        /*
+                        System.out.println("------------------------------");
+                        System.out.println(choices[1][1] + ".) " + choices[1][2]);
+                        System.out.println(choices[2][1] + ".) " + choices[2][2]);
+                        System.out.println("Was willst du als nächstes tun?");*/
+
+                        currentChoice = 0;//scanner.nextInt();
+                    }
+                }
+
+
+            }
+            if (option == 2) {
+                String[][] choices = {
+                        // parentID, ID, choiceTxt, resultTxt, moveToID
+
+                        {"-1", "0", "", "Du stehst in einer Bar.", "9"},                                                        // 0. Pos   // 9 is UserInput (currentChoice)
+
+                        {"0", "1", "Geh in die Wildnis", "Du bist in der Wildnis angekommen.", "9"},                            // 1. Pos
+                        {"0", "2", "Trink ein Getränk", "Du lässt dir ein Getränk schmecken", "0"},                             // 2. Pos
+
+                        {"1", "3", "Kämpf gegen das Monster", "Das Monster ist ein harter Gegner, aber du besiegst es.", "1"},  // 3. Pos
+                        {"1", "4", "Lauf vor dem Monster davon", "Du läufst wie ein Feigling zurück zur Bar.", "0"}};           // 4. Pos
+
+                int currentChoice = 0;
+                ArrayList<Integer> viableChoices = new ArrayList<Integer>();
+
+                while (true){
+
+                    for (int i = 0; i < choices.length; i++) {  // i = currentChoice
+                        for (int j = 0; j < choices[0].length; j++) {
+                            // show every Array- 2. var (if current Array 1. var Number) if its the same Number
+                            if (Integer.parseInt(choices[i][0]) == currentChoice)        {
+                                viableChoices.add(Integer.parseInt(choices[i][1]));
+                            }
                         }
-                        System.out.print("Bisherige Tipps: ");
-                        System.out.println("[Mensch: " + humanGuesses + ", Computer: " + computerGuesses + "]");
+                    }
+                    // print current Array 3. var
+                    System.out.println(choices[currentChoice][3]);
+                    System.out.println("---------------------------");
+
+                    // sout options
+                    for (int i = 0; i < viableChoices.size(); i++) {
+                        int choiceID = viableChoices.get(i);
+                        String choiceText = "";
+                        for (int j = 0; j < choices.length; j++) {
+                            if (choices[j][1].equals(Integer.toString(choiceID))) {
+                                choiceText = choices[j][2];
+                                break;
+                            }
+                        }
+                        System.out.println((i+1) + ") " + choiceText);
+                    }
+                    System.out.println("--------------------");
+                    System.out.print("Was willst du als nächstes tun? ");
+                    // Get the player's choice and validate it
+                    int playerChoice = -1;
+                    while (true) {
+                        try {
+                            playerChoice = Integer.parseInt(scanner.nextLine().trim());
+                            if (playerChoice < 1 || playerChoice > viableChoices.size()) {
+                                System.out.println("Ungültige Eingabe. Bitte wähle eine Option zwischen 1 und " + viableChoices.size() + ".");
+                                System.out.print("Was willst du als nächstes tun? ");
+                            } else {
+                                break;
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Ungültige Eingabe. Bitte wähle eine Option zwischen 1 und " + viableChoices.size() + ".");
+                            System.out.print("Was willst du als nächstes tun? ");
+                        }
                     }
 
-                    humanTurn = !humanTurn;
+                    // Move to the next choice and display the result
+                    currentChoice = viableChoices.get(playerChoice-1);
+                    System.out.println(choices[currentChoice][3]);
+
+
+
                 }
-
-                if (humanScore == 4) {
-                    System.out.println("Gratuliere! Du hast gewonnen!");
-                } else {
-                    System.out.println("Schade! Der Computer hat gewonnen!");
-                }
-
-                } else if (option == 4) {
-
-            } else if (option == 0) {
-                System.out.println("Auf Wiedersehen!");
             }
-
+            if (option == 0) {
+                System.out.println("Feigling!");
+            }
         }
     }
 }
-
-
