@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,19 +10,19 @@ public class MineSweeperV2 {
         boolean gameOn = true;
 
 
-        int [][] map = new int[][]{  // Safes Random Numbers -3 to 0
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0}};
+        int[][] map = new int[][]{  // Safes Random Numbers -3 to 0
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-        String [][] mapString = new String[][]{
+        String[][] mapString = new String[][]{
                 {"  ", "A  ", "B  ", "C  ", "D  ", "E  ", "F  ", "G  ", "H  ", "I  ", "J  "},
                 {"0", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
                 {"1", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
@@ -34,21 +35,21 @@ public class MineSweeperV2 {
                 {"8", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
                 {"9", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"}
         };
-        char firstInput ;
-        char secondInput ;
+        char firstInput;
+        char secondInput;
         double rightChoices = 0;
 
         // make Random Map
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                int rndCount = r.nextInt(-3,1);
-                map [i][j] = rndCount;
-                if (rndCount == 0){
+                int rndCount = r.nextInt(-3, 1);
+                map[i][j] = rndCount;
+                if (rndCount == 0) {
                     mineCount++;
                 }
             }
         }
-        while (gameOn){
+        while (gameOn) {
 
             // Show Map(String)
             for (int g = 0; g < mapString.length; g++) {
@@ -59,24 +60,30 @@ public class MineSweeperV2 {
             }
             int i;
             int j;
-            String userInput;
+            String userInput = null;
 
             do {
                 // User Input
                 char firstInputTry;
                 char secondInputTry;
-                do {
 
-                    System.out.println("Your Try: ");
-                    userInput = scanner.nextLine();
-                    firstInputTry = userInput.charAt(0);   // first
-                    secondInputTry = userInput.charAt(1);  // second
+                try {
+                    do {
+                        System.out.println("Your Try: ");
+                        userInput = scanner.nextLine();
+                        firstInputTry = userInput.charAt(0);   // first
+                        secondInputTry = userInput.charAt(1);  // second
+                    } while (!((firstInputTry <= 'A' && firstInputTry >= 'J') && (secondInputTry <= 0 && secondInputTry >= 9)) && userInput.length() > 2);
 
-                } while ((firstInputTry <= 'A' && firstInputTry >= 'J') && (secondInputTry <= 0 && secondInputTry >= 9));
+                } catch (InputMismatchException ex) {
+                    System.out.println("Invalid Input");
+                    scanner.next();
+                }
 
                 // UserInput split
                 firstInput = userInput.charAt(0);   // first
                 secondInput = userInput.charAt(1);  // second
+
 
                 // Accept 1.char == Number 2.char == Letter
 
@@ -103,18 +110,18 @@ public class MineSweeperV2 {
             } while (map[i][j] == 9);
 
             // check if mine or not
-            if(map[i][j] == 0){
+            if (map[i][j] == 0) {
                 mapString[i + 1][j + 1] = "[*]";
                 System.out.println("Du bist auf eine Mine getreten");
                 System.out.println("Game Over");
                 gameOn = false;
-            } else{
+            } else {
                 // Show pre-Map description
                 mapString[i + 1][j + 1] = "[-]";
                 map[i][j] = 9;
                 rightChoices++;
-                System.out.println("Du hast " + rightChoices + "/" +(100 - mineCount) + " (" +(rightChoices / (100 - mineCount) * 100 ) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
-                System.out.println("Es bleiben noch " +  mineCount + " Minen versteckt.");
+                System.out.println("Du hast " + rightChoices + "/" + (100 - mineCount) + " (" + (rightChoices / (100 - mineCount) * 100) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
+                System.out.println("Es bleiben noch " + mineCount + " Minen versteckt.");
                 System.out.println("Wo willst du nach Minen suchen?");
             }
         }

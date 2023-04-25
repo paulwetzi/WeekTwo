@@ -1,174 +1,133 @@
-import java.sql.Array;
-import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class chartointtest {
     public static void main(String[] args) {
-        int option = 9;
+        Random r = new Random();
         Scanner scanner = new Scanner(System.in);
-
-        while (option != 0) {
-            System.out.println();
-            System.out.println("Welches Abenteuer möchtest du spielen?");
-            System.out.println("--------------------------------------");
-            System.out.println("1. The Drunken Wiking");
-            System.out.println("2. Rise of the Hydra");
-            System.out.println("0. Aufgeben");
-            option = scanner.nextInt();
-
-            if (option == 1) {
-                String[][] choices = {
-                        // parentID, ID, choiceTxt, resultTxt, moveToID
-
-                        {"-1", "0", "", "Du stehst in einer Bar.", "9"},                                                        // 0. Pos   // 9 is UserInput (currentChoice)
-
-                        {"0", "1", "Geh in die Wildnis", "Du bist in der Wildnis angekommen.", "9"},                            // 1. Pos
-                        {"0", "2", "Trink ein Getränk", "Du lässt dir ein Getränk schmecken", "0"},                             // 2. Pos
-
-                        {"1", "3", "Kämpf gegen das Monster", "Das Monster ist ein harter Gegner, aber du besiegst es.", "1"},  // 3. Pos
-                        {"1", "4", "Lauf vor dem Monster davon", "Du läufst wie ein Feigling zurück zur Bar.", "0"}};           // 4. Pos
-
-                int currentChoice = 0;
+        int mineCount = 0;
+        boolean gameOn = true;
 
 
-                while (true) {
-                    // Code here
+        int[][] map = new int[][]{  // Safes Random Numbers -3 to 0
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-                    // if currentChoice == 0: String[0][3]  sout: String[1][1 and 2]  sout: String[2][1 and 2]
-                    if (currentChoice == 0){
-                        System.out.println(choices[0][3]);                                              // Überschrift
-                        System.out.println("------------------------------");
-                        System.out.println(choices[1][1] + ".) " + choices[1][2]);                      // 1.
-                        System.out.println(choices[2][1] + ".) " + choices[2][2]);                      // 2.
-                        System.out.println("Was willst du als nächstes tun?");
-                        currentChoice = scanner.nextInt();
-                       /* do {
+        String[][] mapString = new String[][]{
+                {"  ", "A  ", "B  ", "C  ", "D  ", "E  ", "F  ", "G  ", "H  ", "I  ", "J  "},
+                {"0", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"1", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"2", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"3", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"4", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"5", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"6", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"7", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"8", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
+                {"9", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"}
+        };
+        char firstInput = 0;
+        char secondInput = 0;
+        double rightChoices = 0;
 
-                        }while(currentChoice < 1 && currentChoice > 2)*/
-                    }if (currentChoice == 1){
-                        System.out.println();
-                        System.out.println(choices[1][3]);                                              // Überschrift
-                        System.out.println("------------------------------");
-                        System.out.println(choices[3][1] + ".) " + choices[3][2]);                      // 3,
-                        System.out.println(choices[4][1] + ".) " + choices[4][2]);                      // 4.
-                        System.out.println("Was willst du als nächstes tun?");
-                        currentChoice = scanner.nextInt();
-/*
-                        while(currentChoice < 3 && currentChoice > 4){
-                        }*/
-                    }if (currentChoice == 2){
-                        System.out.println();
-                        System.out.println(choices[2][3]);
-                        currentChoice = 0;
-                        System.out.println();
-
-
-                        /*
-                        System.out.println("------------------------------");
-                        System.out.println(choices[1][1] + ".) " + choices[1][2]);
-                        System.out.println(choices[2][1] + ".) " + choices[2][2]);
-                        System.out.println("Was willst du als nächstes tun?");*/
-
-
-                        // if he chooses 3 or 4 currentChoice == 0
-                        //currentChoice = scanner.nextInt();
-                    }if (currentChoice == 3){
-                        System.out.println();
-                        System.out.println(choices[3][3]);
-
-                        /*
-                        System.out.println("------------------------------");
-                        System.out.println(choices[1][1] + ".) " + choices[1][2]);
-                        System.out.println(choices[2][1] + ".) " + choices[2][2]);
-                        System.out.println("Was willst du als nächstes tun?");*/
-
-                        currentChoice = 1;//scanner.nextInt();
-                    }if (currentChoice == 4){
-                        System.out.println();
-                        System.out.println(choices[4][3]);
-                        System.out.println();
-                        /*
-                        System.out.println("------------------------------");
-                        System.out.println(choices[1][1] + ".) " + choices[1][2]);
-                        System.out.println(choices[2][1] + ".) " + choices[2][2]);
-                        System.out.println("Was willst du als nächstes tun?");*/
-
-                        currentChoice = 0;//scanner.nextInt();
-                    }
-                }
-
-
-            }
-            if (option == 2) {
-                String[][] choices = {
-                        // parentID, ID, choiceTxt, resultTxt, moveToID
-
-                        {"-1", "0", "", "Du stehst in einer Bar.", "9"},                                                        // 0. Pos   // 9 is UserInput (currentChoice)
-
-                        {"0", "1", "Geh in die Wildnis", "Du bist in der Wildnis angekommen.", "9"},                            // 1. Pos
-                        {"0", "2", "Trink ein Getränk", "Du lässt dir ein Getränk schmecken", "0"},                             // 2. Pos
-
-                        {"1", "3", "Kämpf gegen das Monster", "Das Monster ist ein harter Gegner, aber du besiegst es.", "1"},  // 3. Pos
-                        {"1", "4", "Lauf vor dem Monster davon", "Du läufst wie ein Feigling zurück zur Bar.", "0"}};           // 4. Pos
-
-                int currentChoice = 0;
-                ArrayList<Integer> viableChoices = new ArrayList<Integer>();
-
-                while (true){
-
-                    for (int i = 0; i < choices.length; i++) {  // i = currentChoice
-                        for (int j = 0; j < choices[0].length; j++) {
-                            // show every Array- 2. var (if current Array 1. var Number) if its the same Number
-                            if (Integer.parseInt(choices[i][0]) == currentChoice)        {
-                                viableChoices.add(Integer.parseInt(choices[i][1]));
-                            }
-                        }
-                    }
-                    // print current Array 3. var
-                    System.out.println(choices[currentChoice][3]);
-                    System.out.println("---------------------------");
-
-                    // sout options
-                    for (int i = 0; i < viableChoices.size(); i++) {
-                        int choiceID = viableChoices.get(i);
-                        String choiceText = "";
-                        for (int j = 0; j < choices.length; j++) {
-                            if (choices[j][1].equals(Integer.toString(choiceID))) {
-                                choiceText = choices[j][2];
-                                break;
-                            }
-                        }
-                        System.out.println((i+1) + ") " + choiceText);
-                    }
-                    System.out.println("--------------------");
-                    System.out.print("Was willst du als nächstes tun? ");
-                    // Get the player's choice and validate it
-                    int playerChoice = -1;
-                    while (true) {
-                        try {
-                            playerChoice = Integer.parseInt(scanner.nextLine().trim());
-                            if (playerChoice < 1 || playerChoice > viableChoices.size()) {
-                                System.out.println("Ungültige Eingabe. Bitte wähle eine Option zwischen 1 und " + viableChoices.size() + ".");
-                                System.out.print("Was willst du als nächstes tun? ");
-                            } else {
-                                break;
-                            }
-                        } catch (NumberFormatException e) {
-                            System.out.println("Ungültige Eingabe. Bitte wähle eine Option zwischen 1 und " + viableChoices.size() + ".");
-                            System.out.print("Was willst du als nächstes tun? ");
-                        }
-                    }
-
-                    // Move to the next choice and display the result
-                    currentChoice = viableChoices.get(playerChoice-1);
-                    System.out.println(choices[currentChoice][3]);
-
-
-
+        // make Random Map
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                int rndCount = r.nextInt(-3, 1);
+                map[i][j] = rndCount;
+                if (rndCount == 0) {
+                    mineCount++;
                 }
             }
-            if (option == 0) {
-                System.out.println("Feigling!");
+        }
+        while (gameOn) {
+
+            // Show Map(String)
+            for (int g = 0; g < mapString.length; g++) {
+                for (int k = 0; k < mapString[g].length; k++) {
+                    System.out.print(mapString[g][k]);
+                }
+                System.out.println();
+            }
+            int i;
+            int j;
+
+            String userInput = null;
+            do {
+                char firstInputTry;
+                char secondInputTry;
+
+                boolean again = true;
+
+                do {
+                    System.out.println("Your Try: ");
+                    userInput = scanner.nextLine();
+                    firstInputTry = userInput.charAt(0);   // first
+                    if (userInput.length() < 2)
+                        userInput = "AB";
+                    secondInputTry = userInput.charAt(1);  // second
+                } while (firstInputTry < 'A' || firstInputTry > 'J' || secondInputTry < 48 || secondInputTry > 57 || userInput.length() != 2);
+
+                i = firstInputTry - 65;
+                j = secondInputTry - 48;
+
+                System.out.println(i + "/" + j);
+
+                if (map[i][j] == 9)
+                    System.out.println("Ist schon aufgedeckt");
+                //userInput = scanner.nextLine();
+            } while (map[i][j] == 9);
+
+            // check if mine or not
+            if (map[i][j] == 0) {                                                             // this is the bomb
+                mapString[j + 1][i + 1] = "[*]";
+                System.out.println("Du bist auf eine Mine getreten");
+                System.out.println("Game Over");
+                gameOn = false;
+            } else if (map[i][j] == -1) {                                                   // this is -1
+                // Show pre-Map description
+                mapString[j + 1][i + 1] = "[-]";
+                //map[i][j] = 9;
+                rightChoices++;
+                System.out.println("Du hast " + rightChoices + "/" + (100 - mineCount) + " (" + (rightChoices / (100 - mineCount) * 100) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
+                System.out.println("Es bleiben noch " + mineCount + " Minen versteckt.");
+                System.out.println("Wo willst du nach Minen suchen?");
+
+                // from -2 to -3
+            } else if (map[i][j] < -1) {
+                int a = map[i][j];
+                int b = 0;
+                if (a == -2) {
+                    b = 1;
+                } else if (a == -3) {
+                    b = 2;
+                }
+                System.out.println("Test: " + i + "/" + j);
+                for (int k = i - b; k < map.length && k <= i + b; k++) {
+                    if (k < 0)
+                        k = 0;
+                    for (int l = j - b; l < map[i].length && l <= j + b; l++) {
+                        if (l < 0)
+                            l = 0;
+                        if (map[l][k] != 0) {
+                            mapString[l + 1][k + 1] = "[-]";
+                            rightChoices++;
+                        } else {
+                            mapString[l + 1][k + 1] = "[*]";
+                        }
+                    }
+                }
+                System.out.println("Du hast " + rightChoices + "/" + (100 - mineCount) + " (" + (rightChoices / (100 - mineCount) * 100) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
+                System.out.println("Es bleiben noch " + mineCount + " Minen versteckt.");
+                System.out.println("Wo willst du nach Minen suchen?");
             }
         }
     }

@@ -1,5 +1,3 @@
-import  java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,19 +9,19 @@ public class MineSweeperV1 {
         boolean gameOn = true;
 
 
-        int [][] map = new int[][]{  // Safes Random Numbers -3 to 0
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0}};
+        int[][] map = new int[][]{  // Safes Random Numbers -3 to 0
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-        String [][] mapString = new String[][]{
+        String[][] mapString = new String[][]{
                 {"  ", "A  ", "B  ", "C  ", "D  ", "E  ", "F  ", "G  ", "H  ", "I  ", "J  "},
                 {"0", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
                 {"1", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
@@ -36,21 +34,21 @@ public class MineSweeperV1 {
                 {"8", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"},
                 {"9", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]", "[ ]"}
         };
-        char firstInput ;
-        char secondInput ;
+        char firstInput = 0;
+        char secondInput = 0;
         double rightChoices = 0;
 
         // make Random Map
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                int rndCount = r.nextInt(-3,1);
-                map [i][j] = rndCount;
-                if (rndCount == 0){
+                int rndCount = r.nextInt(-3, 1);
+                map[i][j] = rndCount;
+                if (rndCount == 0) {
                     mineCount++;
                 }
             }
         }
-        while (gameOn){
+        while (gameOn) {
 
             // Show Map(String)
             for (int g = 0; g < mapString.length; g++) {
@@ -62,50 +60,74 @@ public class MineSweeperV1 {
             int i;
             int j;
 
-            do{
-            // User Input
-            String userInput = scanner.nextLine();
+            String userInput = null;
+            do {
+                char firstInputTry;
+                char secondInputTry;
 
-            // UserInput split
-            firstInput = userInput.charAt(0);   // first
-            secondInput = userInput.charAt(1);  // second
+                boolean again = true;
 
-            if (firstInput >= 48 && firstInput <= 57){  // Is first Input Number ?
-                // convert char to String
-                String first = firstInput+"";  // first
+                do {
+                    System.out.println("Your Try: ");
+                    userInput = scanner.nextLine();
+                    firstInputTry = userInput.charAt(0);   // first
+                    if (userInput.length() < 2)
+                        userInput = "AB";
+                    secondInputTry = userInput.charAt(1);  // second
+                } while (firstInputTry < 'A' || firstInputTry > 'J' || secondInputTry < 48 || secondInputTry > 57 || userInput.length() != 2);
 
+                i = firstInputTry - 65;
+                j = secondInputTry - 48;
 
-                // make int out of char
-                i = Integer.parseInt(first);
-                j = secondInput - 65;
-            } else{
-                String second = secondInput+"";  // second
+                System.out.println(i + "/" + j);
 
-                // make int out of char
-                j = firstInput - 65;
-                i = Integer.parseInt(second);
-
-            }
-
-            if (map[i][j] == 9)
-                System.out.println("Ist schon aufgedeckt");
+                if (map[i][j] == 9)
+                    System.out.println("Ist schon aufgedeckt");
                 //userInput = scanner.nextLine();
             } while (map[i][j] == 9);
 
             // check if mine or not
-            if(map[i][j] == 0){
-                mapString[i + 1][j + 1] = "[*]";
+            if (map[i][j] == 0) {                                                             // this is the bomb
+                mapString[j + 1][i + 1] = "[*]";
                 System.out.println("Du bist auf eine Mine getreten");
                 System.out.println("Game Over");
                 gameOn = false;
-            } else{
-            // Show pre-Map description
-            mapString[i + 1][j + 1] = "[-]";
-            map[i][j] = 9;
-            rightChoices++;
-            System.out.println("Du hast " + rightChoices + "/" +(100 - mineCount) + " (" +(rightChoices / (100 - mineCount) * 100 ) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
-            System.out.println("Es bleiben noch " +  mineCount + " Minen versteckt.");
-            System.out.println("Wo willst du nach Minen suchen?");
+            } else if (map[i][j] == -1) {                                                   // this is -1
+                // Show pre-Map description
+                mapString[j + 1][i + 1] = "[-]";
+                //map[i][j] = 9;
+                rightChoices++;
+                System.out.println("Du hast " + rightChoices + "/" + (100 - mineCount) + " (" + (rightChoices / (100 - mineCount) * 100) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
+                System.out.println("Es bleiben noch " + mineCount + " Minen versteckt.");
+                System.out.println("Wo willst du nach Minen suchen?");
+
+                // from -2 to -3
+            } else if (map[i][j] < -1) {
+                int a = map[i][j];
+                int b = 0;
+                if (a == -2) {
+                    b = 1;
+                } else if (a == -3) {
+                    b = 2;
+                }
+                System.out.println("Test: " + i + "/" + j);
+                for (int k = i - b; k < map.length && k <= i + b; k++) {
+                    if (k < 0)
+                        k = 0;
+                    for (int l = j - b; l < map[i].length && l <= j + b; l++) {
+                        if (l < 0)
+                            l = 0;
+                        if (map[l][k] != 0) {
+                            mapString[l + 1][k + 1] = "[-]";
+                            rightChoices++;
+                        } else {
+                            mapString[l + 1][k + 1] = "[*]";
+                        }
+                    }
+                }
+                System.out.println("Du hast " + rightChoices + "/" + (100 - mineCount) + " (" + (rightChoices / (100 - mineCount) * 100) + "%) " + "des nicht verminten Gebiets auf Minen gecheckt");
+                System.out.println("Es bleiben noch " + mineCount + " Minen versteckt.");
+                System.out.println("Wo willst du nach Minen suchen?");
             }
         }
     }
